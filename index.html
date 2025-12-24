@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snow ball</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #020202;
+            color: #FFFFFF;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            background-image: radial-gradient(circle at 50% -20%, rgba(255,255,255,0.08) 0%, transparent 70%);
+        }
+        
+        /* True Liquid Glass - Refined Transparency */
+        .liquid-glass {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.5),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Removed global .liquid-glass:hover to prevent the "glow bug" */
+
+        .snow-text {
+            color: #FFFFFF;
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
+        }
+
+        /* Snow Particles Animation */
+        .snow-particle {
+            position: fixed;
+            background: #FFFFFF;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.3;
+            z-index: -1;
+            filter: blur(1px);
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh); }
+        }
+
+        /* High-End Shutter Opening Animation - Symmetrical Vertical Extension */
+        @keyframes vertical-reveal {
+            0% { 
+                transform: translate(-50%, -50%) scaleY(0) scaleX(0.85); 
+                opacity: 0;
+                filter: brightness(2) blur(15px);
+            }
+            15% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scaleY(0.02) scaleX(1.02); 
+                filter: brightness(1.5) blur(10px);
+            }
+            100% { 
+                transform: translate(-50%, -50%) scaleY(1) scaleX(1); 
+                opacity: 1;
+                filter: brightness(1) blur(0px);
+            }
+        }
+
+        @keyframes backdrop-fade {
+            from { opacity: 0; backdrop-filter: blur(0px); }
+            to { opacity: 1; backdrop-filter: blur(12px); }
+        }
+        
+        .animate-vertical-reveal {
+            animation: vertical-reveal 0.95s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform-origin: center center;
+            will-change: transform, opacity, filter;
+        }
+
+        .animate-backdrop {
+            animation: backdrop-fade 0.7s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        svg { overflow: visible; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "react-dom": "https://esm.sh/react-dom@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "vite": "https://esm.sh/vite@^7.3.0",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        const particleCount = 60;
+        for (let i = 0; i < particleCount; i++) {
+            const p = document.createElement('div');
+            p.className = 'snow-particle';
+            const size = Math.random() * 2 + 1 + 'px';
+            p.style.width = size;
+            p.style.height = size;
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.top = '-' + (Math.random() * 100) + 'vh';
+            p.style.animationDuration = Math.random() * 12 + 8 + 's';
+            p.style.animationDelay = Math.random() * 5 + 's';
+            document.body.appendChild(p);
+        }
+    </script>
+    <script type="module" src="index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
